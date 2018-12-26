@@ -23,14 +23,14 @@ public class ActivityDetails extends AppCompatActivity {
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_main);
+            setContentView(R.layout.activity_details);
 
             listView = (ListView) findViewById(R.id.listView);
             getJSON("http://192.168.43.149/regJSON.php");
         }
 
 
-        private void getJSON(final String url1) {
+        private void getJSON(final String jsonurl) {
 
             class GetJSON extends AsyncTask<Void, Void, String> {
 
@@ -54,7 +54,7 @@ public class ActivityDetails extends AppCompatActivity {
                 @Override
                 protected String doInBackground(Void... voids) {
                     try {
-                        URL url = new URL(url1);
+                        URL url = new URL(jsonurl);
                         HttpURLConnection con = (HttpURLConnection) url.openConnection();
                         StringBuilder sb = new StringBuilder();
                         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream()));
@@ -77,11 +77,11 @@ public class ActivityDetails extends AppCompatActivity {
             String[] details = new String[jsonArray.length()];
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject obj = jsonArray.getJSONObject(i);
-                details[i] = obj.getString("studname");
-                details[i] = obj.getString("studid");
-                details[i] = obj.getString("email");
+                details[i] = obj.getString("studid") +"\n"+
+                obj.getString("studname")+"\n"+
+                obj.getString("email");
             }
-            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_2, details);
+            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, details);
             listView.setAdapter(arrayAdapter);
         }
     }
