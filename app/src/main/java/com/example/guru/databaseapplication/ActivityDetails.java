@@ -85,3 +85,5 @@ public class ActivityDetails extends AppCompatActivity {
             listView.setAdapter(arrayAdapter);
         }
     }
+
+    //
